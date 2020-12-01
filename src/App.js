@@ -1,25 +1,78 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { setCurrentUser } from './redux/user/user.actions';
 
-function App() {
+import { Switch, Route, Redirect } from 'react-router-dom';
+
+import Layout from './components/Layout';
+
+import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
+import HelloPage from './pages/HelloPage';
+
+const pages = [
+  {
+    path: '/profile',
+    component: <ProfilePage />,
+  },
+  {
+    path: '/hello',
+    component: <HelloPage />,
+  },
+];
+
+function App({
+  setCurrentUser,
+}){
+  useEffect(() => {
+    setCurrentUser({
+      name: 'Jenn',
+    });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+
+      <Route exact path="/">
+        <HomePage />
+      </Route>
+
+      <Route path="*">
+        <Layout>
+          <Switch>
+
+            {pages.map(page => (
+              <Route key={page.path} exact path={page.path}>
+                {page.component}
+              </Route>
+            ))}
+
+            <Route path="*">
+              <Redirect to="/" />
+            </Route>
+
+          </Switch>
+        </Layout>
+      </Route>
+
+    </Switch>
   );
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    currentUser: state.user.currentUser,
+  };
+};
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      setCurrentUser,
+    },
+    dispatch,
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
