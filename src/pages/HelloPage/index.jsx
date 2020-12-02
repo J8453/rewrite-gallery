@@ -1,29 +1,51 @@
-import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Route } from 'react-router-dom';
 
 import { Wrapper } from './styles';
 
 import { connect } from 'react-redux';
 import Button from '../../components/Button';
+import HelloWording from '../../components/HelloWording';
 
 const HelloPage = ({
 	currentUser,
+	match,
 }) => {
 	const history = useHistory();
-	useEffect(() => {
-		if (!currentUser) history.push('/');
-	}, [currentUser]);
 
 	return (
 		<Wrapper>
 			👋🏻
+			{currentUser
+				? (
+					<Button
+						wd={180}
+						fs="16px"
+						onClick={() => history.push('/profile')}
+					>
+						回到 Profile
+					</Button>
+				)
+				: null
+			}
+
 			<Button
-				wd={180}
 				fs="16px"
-				onClick={() => history.push('/profile')}
+				onClick={() => history.push(`${match.path}/hi`)}
 			>
-				回到 Profile
+				1
 			</Button>
+
+			<Button
+				fs="16px"
+				onClick={() => history.push(`${match.path}/hello`)}
+			>
+				2
+			</Button>
+
+			<Route
+				path={`${match.path}/:wording`}
+				component={HelloWording}
+			/>
 		</Wrapper>
 	);
 };

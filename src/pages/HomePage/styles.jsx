@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
 `
 
 export const BackgroundPic = styled.div`
-	background-image: url('./bg.jpg');
+	background-image: url("https://i.imgur.com/l1bIZF5.jpg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;

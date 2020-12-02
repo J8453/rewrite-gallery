@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
@@ -14,11 +14,13 @@ import HelloPage from './pages/HelloPage';
 const pages = [
   {
     path: '/profile',
-    component: <ProfilePage />,
+    component: ProfilePage,
+    exact: true,
   },
   {
     path: '/hello',
-    component: <HelloPage />,
+    component: HelloPage,
+    exact: false,
   },
 ];
 
@@ -30,6 +32,8 @@ function App({
       name: 'Jenn',
     });
   }, []);
+
+  const [state] = useState('test');
 
   return (
     <Switch>
@@ -43,9 +47,12 @@ function App({
           <Switch>
 
             {pages.map(page => (
-              <Route key={page.path} exact path={page.path}>
-                {page.component}
-              </Route>
+              <Route
+                key={page.path}
+                exact={page.exact}
+                path={page.path}
+                component={page.component}
+              />
             ))}
 
             <Route path="*">
