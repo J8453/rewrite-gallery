@@ -1,50 +1,78 @@
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Wrapper, BackgroundPic, Title } from './styles';
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setCurrentUser } from '../../redux/user/user.actions';
 import Button from '../../components/Button';
+import Window from '../../components/Window';
+import LoginForm from '../../components/LoginForm';
+import RegisterForm from '../../components/RegisterForm';
 
 const HomePage = ({
 	currentUser,
-	setCurrentUser,
 }) => {
 	const history = useHistory();
-	const button = {
-		isLoggedIn: {
-			handleClick: () => history.push('/profile'),
-			text: 'My profile',
-		},
-		isNotLoggedIn: {
-			handleClick: () => setCurrentUser({name: 'Jenn'}),
-			text: 'Login as Jenn',
-		},
+
+	const [window, setWindow] = useState({
+		displayed: false,
+		children: undefined,
+	});
+
+	useEffect(() => {
+		setWindow({displayed: false, children: undefined});
+	}, [currentUser]);
+	
+	const buttons = {
+		isLoggedIn: [
+			{
+				key: 'profile',
+				handleClick: () => history.push('/profile'),
+				buttonText: 'My profile',
+			},
+		],
+		isNotLoggedIn: [
+			{
+				key: 'login',
+				handleClick: () => setWindow({displayed: true, children: <LoginForm />}),
+				buttonText: '登入',
+			},
+			{
+				key: 'register',
+				handleClick: () => setWindow({displayed: true, children: <RegisterForm />}),
+				buttonText: '註冊',
+			},
+		],
 	};
+
+	const displayedButtons = currentUser ? buttons.isLoggedIn : buttons.isNotLoggedIn;
 
 	return (
 		<Wrapper>
 			<BackgroundPic />
 			<Title>Gallery</Title>
-			<Button
-				wd={180}
-				hg={60}
-				fs="1.5em"
-				onClick={currentUser
-					? button.isLoggedIn.handleClick
-					: button.isNotLoggedIn.handleClick
-				}
-				style={{
-					position: 'relative',
-					top: '50px',
-				}}
-			>
-				{currentUser
-					? button.isLoggedIn.text
-					: button.isNotLoggedIn.text
-				}
-			</Button>
+
+			{displayedButtons.map(btn => (
+				<Button
+					key={btn.key}
+					wd={180}
+					hg={60}
+					fs="1.2em"
+					onClick={btn.handleClick}
+					style={{
+						position: 'relative',
+						top: '50px',
+					}}
+				>
+					{btn.buttonText}
+				</Button>
+			))}
+			
+			<Window
+				displayed={window.displayed}
+				onClose={() => setWindow({displayed: false, children: undefined})}
+				children={window.children}
+			/>
 		</Wrapper>
 	);
 };
@@ -55,14 +83,4 @@ function mapStateToProps(state) {
 	};
 };
 
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      setCurrentUser,
-    },
-    dispatch,
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps)(HomePage);

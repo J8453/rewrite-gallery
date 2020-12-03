@@ -28,9 +28,9 @@ function App({
   setCurrentUser,
 }){
   useEffect(() => {
-    setCurrentUser({
-      name: 'Jenn',
-    });
+    // setCurrentUser({
+    //   name: 'Jenn',
+    // });
   }, []);
 
   const [state] = useState('test');
