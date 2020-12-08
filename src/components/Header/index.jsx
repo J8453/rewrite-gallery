@@ -10,7 +10,7 @@ import Button from '../Button';
 const Header = ({
   currentUser,
   logout,
-  setCurrentUser,
+  // setCurrentUser,
 }) => {
   const history = useHistory();
 
@@ -22,7 +22,7 @@ const Header = ({
           <GreetingLine
             onClick={() => history.push('/hello')}
           >
-            Hi, {currentUser.name}!
+            Hi, {currentUser.username}!
           </GreetingLine>
           <Button
             reverse
@@ -33,16 +33,17 @@ const Header = ({
             登出
           </Button>
         </>)
-        : (
-          <Button
-            reverse
-            wd={50}
-            fs="0.8em"
-            onClick={() => setCurrentUser({name: 'Jenn'})}
-          >
-            登入
-          </Button>
-        )
+        // : (
+        //   <Button
+        //     reverse
+        //     wd={50}
+        //     fs="0.8em"
+        //     onClick={() => setCurrentUser({name: 'Jenn'})}
+        //   >
+        //     登入
+        //   </Button>
+        // )
+        : null
       }
 		</Wrapper>
   );
@@ -58,7 +59,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       logout,
-      setCurrentUser,
+      // setCurrentUser,
     },
     dispatch,
   );

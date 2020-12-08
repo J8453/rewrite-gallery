@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   width: 100%;
-  padding: 24px 35px;
+  padding: 18px 24px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   background-color: white;
   border: ${ p => p.dashed ? `1px dashed ${p.theme.colors.shallowGrey}` : null };

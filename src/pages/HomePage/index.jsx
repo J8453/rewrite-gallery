@@ -27,7 +27,7 @@ const HomePage = ({
 		isLoggedIn: [
 			{
 				key: 'profile',
-				handleClick: () => history.push('/profile'),
+				handleClick: () => history.push(`/profile/${currentUser?.id}`),
 				buttonText: 'My profile',
 			},
 		],

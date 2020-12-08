@@ -10,5 +10,6 @@ export const Content = styled.div`
 	overflow: scroll;
 	background-color: ${ p => p.theme.colors.bg };
 	color: ${ p => p.theme.colors.textColor };
-	padding: 40px 40px 0 40px;
+	/* padding: 40px 40px 0 40px; */
+	display: flex;
 `

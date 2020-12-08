@@ -1,21 +1,27 @@
 import apiService from './api-service';
 
-export async function login(username, password) {
+export async function login(data) {
   return apiService.post(
 		'/login',
-		{
-			username,
-			password,
-		}
+		data
 	);
 };
 
-export async function register(username, password) {
+export async function register(data) {
   return apiService.post(
 		'/register',
-		{
-			username,
-			password,
-		}
+		data
+	);
+};
+
+export async function getUserInfo(userId) {
+  return apiService.get(
+		`/user/${userId}`
+	);
+};
+
+export async function getAlbums(userId) {
+  return apiService.get(
+		`/album/user/${userId}`
 	);
 };

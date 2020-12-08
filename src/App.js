@@ -13,7 +13,7 @@ import HelloPage from './pages/HelloPage';
 
 const pages = [
   {
-    path: '/profile',
+    path: '/profile/:userId',
     component: ProfilePage,
     exact: true,
   },

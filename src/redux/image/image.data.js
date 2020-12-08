@@ -58,5 +58,5 @@ export const INITIAL_IMAGES_DATA = [
 		views: 0,
 		vote: null,
 		width: 1818,
-	}
+	},
 ];

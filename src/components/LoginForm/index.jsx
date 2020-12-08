@@ -5,12 +5,10 @@ import { FormWrapper, FormRow, FormTitle } from './styles';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { login, setCurrentUser } from '../../redux/user/user.actions';
+import { loginStart } from '../../redux/user/user.actions';
 
 const LoginForm = ({
-	// TODO
-	login,
-	setCurrentUser,
+	loginStart,
 }) => {
 	const [form, setForm] = useState({});
 
@@ -25,7 +23,11 @@ const LoginForm = ({
 		e.preventDefault();
 
 		// console.log(form);
-		setCurrentUser({name: 'jenn'});
+		// setCurrentUser({name: 'jenn'});
+		loginStart({
+			username: form.username,
+			password: form.password,
+		});
 	};
 
 	return (
@@ -56,8 +58,7 @@ const LoginForm = ({
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators(
 	  {
-			login,
-			setCurrentUser,
+			loginStart,
 	  },
 	  dispatch,
 	);

@@ -4,13 +4,12 @@ import { FormWrapper, FormRow, FormTitle } from './styles';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { login, setCurrentUser } from '../../redux/user/user.actions';
+import { registerStart } from '../../redux/user/user.actions';
 
 import useForm from '../../hooks/useForm';
 
 const RegisterForm = ({
-	login,
-	setCurrentUser,
+	registerStart,
 }) => {
 	const {
 		values,
@@ -19,7 +18,11 @@ const RegisterForm = ({
 	} = useForm({
 		onSubmit: values => {
 			// console.log(values);
-			setCurrentUser({name: 'jenn'});
+			// setCurrentUser({name: 'jenn'});
+			registerStart({
+				username: values.username,
+				password: values.password,
+			});
 		}
 	});
 
@@ -55,8 +58,7 @@ const RegisterForm = ({
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators(
 	  {
-			login,
-			setCurrentUser,
+			registerStart,
 	  },
 	  dispatch,
 	);

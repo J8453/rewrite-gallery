@@ -12,14 +12,17 @@ const useForm = ({
 		if (!formRendered.current) {
 			setValues(initialValues);
 			setOnSubmitting(false);
-			setOnBlur(false);
 		}
 		formRendered.current = false;
 	}, [initialValues]);
 
 	const handleChange = (event) => {
 		const { target } = event;
-		const { name, value } = target;
+		const { name, files } = target;
+		
+		let { value } = target;
+		if (files) value = files;
+
 		event.persist();
 		setValues({ ...values, [name]: value });
 	};
